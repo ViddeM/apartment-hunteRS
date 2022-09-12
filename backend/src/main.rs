@@ -3,6 +3,7 @@
 extern crate rocket;
 
 mod api;
+mod background_task;
 pub mod brokers;
 pub mod config;
 pub mod error;
@@ -34,6 +35,9 @@ async fn rocket() -> _ {
         .get()
         .await
         .expect("Test connection to redis pool failed");
+
+    // Setup background tasks
+    tokio::task::spawn(background_task::run_background_tasks(redis_pool.clone()));
 
     rocket::build()
         .mount("/api", routes![api::get_apartments::get_apartments])

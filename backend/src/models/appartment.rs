@@ -1,8 +1,9 @@
 use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
 
 use super::{broker::Broker, currency::Money, status::Status};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Apartment {
     pub starting_price: Money,
     pub broker: Broker,

@@ -1,4 +1,4 @@
-use std::env::VarError;
+use std::env::{self, VarError};
 
 #[derive(Debug, thiserror::Error)]
 pub enum ConfigError {
