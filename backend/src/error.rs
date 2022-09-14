@@ -10,6 +10,8 @@ pub enum ApartmentError {
     SerdeJsonError(#[from] serde_json::Error),
     #[error("Reqwest error")]
     ReqwestError(#[from] reqwest::Error),
+    #[error("Regex error")]
+    RegexError(#[from] regex::Error),
 }
 
 pub type ApartmentResult<T> = Result<T, ApartmentError>;

@@ -42,7 +42,7 @@ pub async fn get_cached_apartments(
 pub async fn refresh_apartments_cache(
     redis_pool: &Pool<RedisConnectionManager>,
 ) -> ApartmentResult<()> {
-    let broker_apartments = brokers::get_apartments().await;
+    let broker_apartments = brokers::get_apartments().await?;
 
     let redis_entry = RedisEntry {
         insert_timestamp: Utc::now(),

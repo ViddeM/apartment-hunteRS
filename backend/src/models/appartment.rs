@@ -11,6 +11,7 @@ pub struct Apartment {
     pub description: String,
     pub address: String,
     pub status: Status,
+    pub size: Option<f32>,
     pub area_name: String,
     pub fee: Option<Money>,
     pub number_of_rooms: f32,

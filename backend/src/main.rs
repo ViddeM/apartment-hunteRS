@@ -13,7 +13,7 @@ pub mod services;
 use config::Config;
 use mobc_redis::{mobc::Pool, redis::Client, RedisConnectionManager};
 
-const MAX_REDIS_CONNECTONS: u64 = 20;
+const MAX_REDIS_CONNECTIONS: u64 = 20;
 
 #[launch]
 async fn rocket() -> _ {
@@ -27,7 +27,7 @@ async fn rocket() -> _ {
     ));
     let redis_manager = RedisConnectionManager::new(redis_client);
     let redis_pool = Pool::builder()
-        .max_open(MAX_REDIS_CONNECTONS)
+        .max_open(MAX_REDIS_CONNECTIONS)
         .build(redis_manager);
 
     // Test redis connection

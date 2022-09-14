@@ -98,6 +98,7 @@ impl Into<Apartment> for ErikOlssonPropertyJson {
             address: self.address,
             area_name: self.area_name,
             number_of_rooms: self.number_of_rooms,
+            size: None,
         }
     }
 }
@@ -107,7 +108,7 @@ impl ErikOlssonPropertyJson {
         if self.is_new_production {
             Status::NewProduction
         } else if self.show_as_coming {
-            Status::Upcomming
+            Status::Upcoming
         } else {
             Status::ForSale
         }
