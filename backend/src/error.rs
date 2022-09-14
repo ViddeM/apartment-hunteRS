@@ -8,6 +8,8 @@ pub enum ApartmentError {
     MobcRedisError(#[from] mobc::Error<mobc_redis::redis::RedisError>),
     #[error("Serde json error")]
     SerdeJsonError(#[from] serde_json::Error),
+    #[error("Reqwest error")]
+    ReqwestError(#[from] reqwest::Error),
 }
 
 pub type ApartmentResult<T> = Result<T, ApartmentError>;

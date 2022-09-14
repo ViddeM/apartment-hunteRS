@@ -1,10 +1,13 @@
 use std::{thread, time::Duration};
 
-use crate::models::{
-    appartment::Apartment,
-    broker::Broker,
-    currency::{Currency, Money},
-    status::Status,
+use crate::{
+    error::ApartmentResult,
+    models::{
+        appartment::Apartment,
+        broker::Broker,
+        currency::{Currency, Money},
+        status::Status,
+    },
 };
 use chrono::{DateTime, NaiveDateTime, TimeZone, Utc};
 use serde::{Deserialize, Serialize};
@@ -12,17 +15,15 @@ use serde::{Deserialize, Serialize};
 const ERIKOLSSON_BASE_ADDRESS: &str = "https://www.erikolsson.se";
 const AREA_ID: &str = "23-Göteborg, Västra Götalands län";
 
-pub async fn get_available_apartments() -> Vec<ErikOlssonPropertyJson> {
+pub async fn get_available_apartments() -> ApartmentResult<Vec<ErikOlssonPropertyJson>> {
     let mut erikolsson_apartments: Vec<ErikOlssonPropertyJson> = vec![];
     let mut page = 0;
 
     loop {
         let mut res = reqwest::get(get_url(page))
-            .await
-            .expect("Failed to make get request")
+            .await?
             .json::<ErikOlssonResponseJson>()
-            .await
-            .expect("Failed to parse json");
+            .await?;
 
         erikolsson_apartments.append(&mut res.properties);
 
@@ -42,7 +43,7 @@ pub async fn get_available_apartments() -> Vec<ErikOlssonPropertyJson> {
         thread::sleep(Duration::from_millis(1500));
     }
 
-    erikolsson_apartments
+    Ok(erikolsson_apartments)
 }
 
 fn get_url(page: usize) -> String {
